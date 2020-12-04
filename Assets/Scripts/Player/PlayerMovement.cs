@@ -30,10 +30,10 @@ public class PlayerMovement : MonoBehaviour
     //public AudioSource steps;
     //public AudioClip throwFood;
     //输入相关
-    private Animator anim;
+    //private Animator anim;
     void Start()
     {
-        anim = GetComponent<Animator>();
+        //anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         initSpeed = MoveSpeed;
         camera = FindObjectOfType<Camera>();
@@ -102,11 +102,11 @@ public class PlayerMovement : MonoBehaviour
         if (movement.x == 0 && movement.z == 0)
         {
             //steps.mute = true;
-            anim.SetBool("running", false);
+            //anim.SetBool("running", false);
         } else
         {
             //steps.mute = false;
-            anim.SetBool("running", true);
+           //anim.SetBool("running", true);
         }
         //rb.position = new Vector3(Mathf.Clamp(rb.position.x, clampMinX, clampMaxX), rb.position.y, Mathf.Clamp(rb.position.z, clampMinY, clampMaxY));
         
