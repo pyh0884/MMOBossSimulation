@@ -10,11 +10,8 @@ public class PlayerMovement : MonoBehaviour
     public float MoveSpeed;
     public float initSpeed;
     private bool isJumping;
-    public Transform ThrowCheck;
     public LayerMask GroundLayer;
-    public LayerMask ObstacleLayer;
     public GameObject dummy;
-    public GameObject food;
     private Camera camera;
     public float
         clampMarginMinX = 0.0f,
@@ -27,14 +24,12 @@ public class PlayerMovement : MonoBehaviour
         clampMinY,
         clampMaxY;
     //冲刺相关
-    public bool inShop = false;
     public bool isPushing;
     //音效相关
     private AudioSource asrc;
-    public AudioSource steps;
-    public AudioClip throwFood;
+    //public AudioSource steps;
+    //public AudioClip throwFood;
     //输入相关
-    public int playerID = 10;
     private Animator anim;
     void Start()
     {
@@ -42,8 +37,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         initSpeed = MoveSpeed;
         camera = FindObjectOfType<Camera>();
-        asrc = GetComponent<AudioSource>();
-  
+        asrc = GetComponent<AudioSource>();  
     }
     //获取屏幕边界坐标
     public void getScreenData()
@@ -63,12 +57,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    //扔食物
-    public void Throw() 
-    {
-        Instantiate(food, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity, null);
-        asrc.PlayOneShot(throwFood);
-    }
     // 所有关于物理的运算全部放在FixedUpdate中
     void FixedUpdate()
     {
@@ -113,11 +101,11 @@ public class PlayerMovement : MonoBehaviour
         // Mute steps when not moving;
         if (movement.x == 0 && movement.z == 0)
         {
-            steps.mute = true;
+            //steps.mute = true;
             anim.SetBool("running", false);
         } else
         {
-            steps.mute = false;
+            //steps.mute = false;
             anim.SetBool("running", true);
         }
         //rb.position = new Vector3(Mathf.Clamp(rb.position.x, clampMinX, clampMaxX), rb.position.y, Mathf.Clamp(rb.position.z, clampMinY, clampMaxY));
