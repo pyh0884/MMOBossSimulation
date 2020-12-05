@@ -242,9 +242,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6182871863412438784}
-  - component: {fileID: 6182871863412438789}
   - component: {fileID: 6182871863412438788}
   - component: {fileID: 6182871863412438785}
+  - component: {fileID: 9112826489368230357}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -260,7 +260,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6182871863412438791}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3724393561169299991}
@@ -270,19 +270,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &6182871863412438789
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6182871863412438791}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.75, y: 1.5, z: 1}
-  m_Center: {x: 0, y: 0.25, z: -0.1}
 --- !u!54 &6182871863412438788
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -297,7 +284,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &6182871863412438785
 MonoBehaviour:
@@ -311,26 +298,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a33fc1e434cb9d4ebdee0d22935e672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 20
-  initSpeed: 0
-  ThrowCheck: {fileID: 0}
+  MoveSpeed: 4
+  JumpSpeed: 3.5
+  fallMultiplier: 1.1
   GroundLayer:
     serializedVersion: 2
     m_Bits: 256
-  ObstacleLayer:
-    serializedVersion: 2
-    m_Bits: 7168
-  dummy: {fileID: 0}
-  food: {fileID: 0}
-  clampMarginMinX: 80
-  clampMarginMaxX: 80
-  clampMarginMinY: 80
-  clampMarginMaxY: 80
-  inShop: 0
-  isPushing: 0
-  steps: {fileID: 0}
-  throwFood: {fileID: 0}
-  playerID: 0
+  groundChecks:
+  - {fileID: 653873144713329730}
+  - {fileID: 3930634097944821811}
+  - {fileID: 4484491106792376567}
+  - {fileID: 2646862164569199757}
+--- !u!136 &9112826489368230357
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6182871863412438791}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1.8
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.3, z: 0}
 --- !u!1 &8441552381589492029
 GameObject:
   m_ObjectHideFlags: 0

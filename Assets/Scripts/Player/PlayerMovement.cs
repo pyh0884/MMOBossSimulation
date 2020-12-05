@@ -4,118 +4,86 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-
     private Rigidbody rb;
     private Vector3 movement;
     public float MoveSpeed;
-    public float initSpeed;
+    public float JumpSpeed;
     private bool isJumping;
+    public float fallMultiplier;
     public LayerMask GroundLayer;
-    public GameObject dummy;
-    private Camera camera;
-    public float
-        clampMarginMinX = 0.0f,
-        clampMarginMaxX = 0.0f,
-        clampMarginMinY = 0.0f,
-        clampMarginMaxY = 0.0f;
-    private float
-        clampMinX,
-        clampMaxX,
-        clampMinY,
-        clampMaxY;
-    //冲刺相关
-    public bool isPushing;
-    //音效相关
-    private AudioSource asrc;
-    //public AudioSource steps;
-    //public AudioClip throwFood;
-    //输入相关
+    public Transform[] groundChecks;
+    private Vector3 dir;
+    private float angle;
     //private Animator anim;
     void Start()
     {
         //anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
-        initSpeed = MoveSpeed;
-        camera = FindObjectOfType<Camera>();
-        asrc = GetComponent<AudioSource>();  
     }
-    //获取屏幕边界坐标
-    public void getScreenData()
+    bool isGrounded()
     {
-        Ray MinX = camera.ScreenPointToRay(new Vector2(0 + clampMarginMinX, 0 + clampMarginMinY));
-        Ray MaxX = camera.ScreenPointToRay(new Vector2(Screen.width - clampMarginMaxX, Screen.height - clampMarginMaxY));
-        RaycastHit hit;
-        if (Physics.Raycast(MinX, out hit,Mathf.Infinity,GroundLayer))
+        foreach (Transform trans in groundChecks)
         {
-            clampMinX = hit.point.x;
-            clampMinY = hit.point.z;
+            if (Physics.Raycast(trans.position, Vector3.down, 0.25f, GroundLayer))
+            {
+                return true;
+            }
+            Debug.DrawLine(trans.position, trans.position + Vector3.down * 0.25f, Color.blue);
         }
-        if (Physics.Raycast(MaxX, out hit, Mathf.Infinity, GroundLayer))
+        return false;
+    }
+    private void Update()
+    {
+        //Movement
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.z = Input.GetAxisRaw("Vertical");
+        dir = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
+        angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+        //Rotation
+        rb.transform.eulerAngles = new Vector3(0, 90 - angle, 0);
+
+        //Jump
+        if (Input.GetButtonDown("Jump") && isGrounded())
         {
-            clampMaxX = hit.point.x;
-            clampMaxY = hit.point.z;
+            rb.velocity = new Vector3(0, JumpSpeed, 0);
+            isJumping = true;
+        }
+
+        //Reset if fall
+        if (transform.position.y < -10)
+        {
+            transform.position = new Vector3(0, 0.5f, 0);
         }
     }
 
     // 所有关于物理的运算全部放在FixedUpdate中
     void FixedUpdate()
     {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.z = Input.GetAxisRaw("Vertical");
-        if (rb.velocity.y == 0)
+        if (rb.velocity.y <= 0 && isGrounded())
+        {
+            rb.velocity = Vector3.zero;
             isJumping = false;
+        }
         ///修改速度精确位移
         if (isJumping && rb.velocity.y < 0)///下降
         {
-            rb.velocity = new Vector3(0, Mathf.Clamp(rb.velocity.y * 1.2f, -25, 0), 0);
-        }
-        else if (isJumping && rb.velocity.y < 5 && rb.velocity.y > 0)
-        {
-            rb.velocity = new Vector3(0, 0, 0);
-        }
-
-        if (rb.position.x < clampMinX && camera.fieldOfView == 30)
-        {
-            Debug.Log(clampMinX);
-            movement.x = Mathf.Clamp(movement.x, 0, 1);
-        }
-        else if (rb.position.x > clampMaxX && camera.fieldOfView == 30)
-        {
-            Debug.Log(clampMaxX);
-            movement.x = Mathf.Clamp(movement.x, -1, 0);
-        }
-        if (rb.position.z < clampMinY && camera.fieldOfView == 30)
-        {
-            Debug.Log(clampMinY);
-            movement.z = Mathf.Clamp(movement.z, 0, 1);
-        }
-        else if (rb.position.z > clampMaxY && camera.fieldOfView == 30)
-        {
-            Debug.Log(clampMaxY);
-            movement.z = Mathf.Clamp(movement.z, -1, 0);
+            rb.velocity = new Vector3(0, Mathf.Clamp(rb.velocity.y * fallMultiplier, -25, 0), 0);
         }
         ///修改坐标精确位移，可能会出现穿模
         rb.position = (rb.position + movement.normalized * MoveSpeed * Time.fixedDeltaTime);
-        transform.LookAt(transform.position + movement);
+        //rb.velocity = movement.normalized * MoveSpeed;
 
-        // Mute steps when not moving;
-        if (movement.x == 0 && movement.z == 0)
-        {
-            //steps.mute = true;
-            //anim.SetBool("running", false);
-        } else
-        {
-            //steps.mute = false;
-           //anim.SetBool("running", true);
-        }
-        //rb.position = new Vector3(Mathf.Clamp(rb.position.x, clampMinX, clampMaxX), rb.position.y, Mathf.Clamp(rb.position.z, clampMinY, clampMaxY));
-        
-        //rb.AddForce(movement * MoveSpeed * Time.fixedDeltaTime); ---带有惯性的移动
+        //if (movement.x == 0 && movement.z == 0)
+        //{
+        //    anim.SetBool("running", false);
+        //}
+        //else
+        //{
+        //    anim.SetBool("running", true);
+        //}
     }
-    private void LateUpdate()
-    {
-        getScreenData();
-    }
+
     //public void createDummy(Vector3 pos)
     //{
     //    var dum = Instantiate(dummy, transform.position, Quaternion.identity);
@@ -130,23 +98,13 @@ public class PlayerMovement : MonoBehaviour
     //        }
     //    }
     //}
-    private void OnDestroy()
-    {
-        //var targetGroup = FindObjectOfType<CinemachineTargetGroup>();
-        //if (targetGroup)
-        //{
-        //    targetGroup.RemoveMember(gameObject.transform);
-        //}
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.layer == 9)
-            isPushing = true;
-    }
 
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.layer == 9)
-            isPushing = false;
-    }
+    //private void OnDestroy()
+    //{
+    //    var targetGroup = FindObjectOfType<CinemachineTargetGroup>();
+    //    if (targetGroup)
+    //    {
+    //        targetGroup.RemoveMember(gameObject.transform);
+    //    }
+    //}
 }
