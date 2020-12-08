@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform[] groundChecks;
     private Vector3 dir;
     private float angle;
+    public float deadHeight = -5.0f;
     //private Animator anim;
     void Start()
     {
@@ -51,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //Reset if fall
-        if (transform.position.y < -10)
+        if (transform.position.y < deadHeight)
         {
             transform.position = new Vector3(0, 0.5f, 0);
         }
