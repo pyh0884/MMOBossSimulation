@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
+using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
 
 public class MoveTowardsEntity : Action
 {
     // Aiming entity
-    public Transform AimingEntity;
+    public SharedTransform AimingTransform;
     
     // Moving Speed
     public float MovingSpeed = 0;
@@ -22,11 +23,7 @@ public class MoveTowardsEntity : Action
 
     public override TaskStatus OnUpdate()
     {
-        if(!AimingEntity)
-        {
-            AimingEntity = GameObject.FindGameObjectWithTag("Player").transform;
-        }
-        aimingDirection = AimingEntity.position - transform.position;
+        aimingDirection = AimingTransform.Value.position - transform.position;
         aimingAngle = Mathf.Atan2(aimingDirection.y, aimingDirection.x) * Mathf.Rad2Deg;
         return TaskStatus.Running;
     }
