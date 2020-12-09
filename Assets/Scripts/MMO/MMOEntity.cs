@@ -7,8 +7,8 @@ namespace MMO_WorkSpace
     [System.Serializable]
     public class EntityAttributes
     {
-        private Attributes m_attribute { get; set; }
-        private int m_attributeAmount { get; set; }
+        private Attributes m_attribute;
+        private int m_attributeAmount;
 
         public EntityAttributes(Attributes attribute, int attributeAmount)
         {

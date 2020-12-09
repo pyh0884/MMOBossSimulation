@@ -8,6 +8,7 @@ namespace MMO_WorkSpace
     public class Skills : ScriptableObject
     {
         // The description of skill
+        [TextArea]
         public string Descriptions;
 
         // The icon of skill

@@ -2,37 +2,40 @@
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
 
-public class MoveTowardsEntity : Action
+namespace MMO_WorkSpace
 {
-    // Aiming entity
-    public SharedTransform AimingTransform;
-    
-    // Moving Speed
-    public float MovingSpeed = 0;
-
-    private Rigidbody rb;
-
-    private Vector3 aimingDirection;
-
-    private float aimingAngle = 0;
-
-    public override void OnStart()
+    public class MoveTowardsEntity : Action
     {
-        rb = GetComponent<Rigidbody>();
-    }
+        // Aiming entity
+        public SharedTransform AimingTransform;
 
-    public override TaskStatus OnUpdate()
-    {
-        aimingDirection = AimingTransform.Value.position - transform.position;
-        aimingAngle = Mathf.Atan2(aimingDirection.y, aimingDirection.x) * Mathf.Rad2Deg;
-        return TaskStatus.Running;
-    }
+        // Moving Speed
+        public float MovingSpeed = 0;
 
-    public override void OnFixedUpdate()
-    {
-        if (rb)
+        private Rigidbody rb;
+
+        private Vector3 aimingDirection;
+
+        private float aimingAngle = 0;
+
+        public override void OnStart()
         {
-            rb.position = (rb.position + aimingDirection.normalized * MovingSpeed * Time.fixedDeltaTime);
+            rb = GetComponent<Rigidbody>();
+        }
+
+        public override TaskStatus OnUpdate()
+        {
+            aimingDirection = AimingTransform.Value.position - transform.position;
+            aimingAngle = Mathf.Atan2(aimingDirection.y, aimingDirection.x) * Mathf.Rad2Deg;
+            return TaskStatus.Running;
+        }
+
+        public override void OnFixedUpdate()
+        {
+            if (rb)
+            {
+                rb.position = (rb.position + aimingDirection.normalized * MovingSpeed * Time.fixedDeltaTime);
+            }
         }
     }
 }
