@@ -113,4 +113,8 @@ public class PlayerMovement : MonoBehaviour
     //        targetGroup.RemoveMember(gameObject.transform);
     //    }
     //}
+    public void Taunted(Transform transform, float duration)
+    {
+        
+    }
 }
