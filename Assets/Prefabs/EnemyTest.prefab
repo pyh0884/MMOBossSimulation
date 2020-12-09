@@ -291,7 +291,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2136741884642921893
 Transform:
   m_ObjectHideFlags: 0
@@ -593,7 +593,7 @@ GameObject:
   - component: {fileID: 8843848579297565062}
   - component: {fileID: 4310323743942324300}
   m_Layer: 10
-  m_Name: EnemyTest
+  m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
