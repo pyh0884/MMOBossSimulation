@@ -5,8 +5,10 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody rb;
-    private Vector3 movement;
+    [HideInInspector] public Vector3 movement;
     public float MoveSpeed;
+    public float ChargeSpeed;
+    public bool isCharging;
     public float JumpSpeed;
     private bool isJumping;
     public float fallMultiplier;
@@ -15,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 dir;
     private float angle;
     public float deadHeight = -5.0f;
+    public bool controllable = true;
     //private Animator anim;
     void Start()
     {
@@ -35,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Update()
     {
+        if (!controllable) return;
         //Movement
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.z = Input.GetAxisRaw("Vertical");
@@ -42,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
         angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
         //Rotation
-        rb.transform.eulerAngles = new Vector3(0, 90 - angle, 0);
+        rb.rotation= Quaternion.Euler(0, 90 - angle, 0);
 
         //Jump
         if (Input.GetButtonDown("Jump") && isGrounded())
@@ -72,7 +76,8 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector3(0, Mathf.Clamp(rb.velocity.y * fallMultiplier, -25, 0), 0);
         }
         ///修改坐标精确位移，可能会出现穿模
-        rb.position = (rb.position + movement.normalized * MoveSpeed * Time.fixedDeltaTime);
+        ///
+        rb.position = (rb.position + movement.normalized * (isCharging ? ChargeSpeed : MoveSpeed) * Time.fixedDeltaTime);
         //rb.velocity = movement.normalized * MoveSpeed;
 
         //if (movement.x == 0 && movement.z == 0)

@@ -5,24 +5,13 @@ using UnityEngine;
 public class Damage : MonoBehaviour
 {
     public float damage;
-    public float duration;
-
-    private void OnEnable()
-    {
-        StartCoroutine("deactivateCollider");        
-    }
-
-    IEnumerator deactivateCollider()
-    {
-        yield return new WaitForSeconds(duration);
-        gameObject.SetActive(false);
-    }
+    public int targetLayer;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 10) //10 = 勇者
+        if (other.gameObject.layer == targetLayer)
         {
-            //TODO: deal damage
+            other.GetComponent<Health>().TakeDamege(damage);
         }
     }
 }
