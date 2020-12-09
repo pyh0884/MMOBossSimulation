@@ -7,21 +7,11 @@ public class WithinSight : Conditional
     // Field of View Angle
     public float FieldOfViewAngle;
 
-    // Target tag
-    public string AimingTag;
-
-    // Target transform
+    // Aiming transform
     public SharedTransform AimingTransform;
 
+    // Target transform
     private Transform targetTransform;
-    
-    public override void OnAwake()
-    {
-        if (AimingTag.Length != 0 && !targetTransform)
-        {
-            targetTransform = GameObject.FindGameObjectWithTag(AimingTag).transform;
-        }
-    }
 
     public override TaskStatus OnUpdate()
     {
