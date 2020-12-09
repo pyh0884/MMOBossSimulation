@@ -10,8 +10,19 @@ public class WithinSight : Conditional
     // Aiming transform
     public SharedTransform AimingTransform;
 
+    // Target tag
+    public string targetTag;
+
     // Target transform
-    public Transform targetTransform;
+    private Transform targetTransform;
+
+    public override void OnAwake()
+    {
+        if(targetTag.Length != 0)
+        {
+            targetTransform = GameObject.FindGameObjectWithTag(targetTag)?.transform;
+        }
+    }
 
     public override TaskStatus OnUpdate()
     {
@@ -31,7 +42,6 @@ public class WithinSight : Conditional
         Vector3 direction = targetTransform.position - transform.position;
         // An object is within sight if the angle is less than field of view
 
-        Debug.Log(Vector3.Angle(direction, transform.forward));
         return Vector3.Angle(direction, transform.forward) < fieldOfViewAngle;
     }
 }

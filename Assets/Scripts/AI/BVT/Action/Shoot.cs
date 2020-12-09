@@ -8,6 +8,7 @@ namespace MMO_WorkSpace
     {
         public override TaskStatus OnUpdate()
         {
+            Debug.Log("Shoot");
             return TaskStatus.Success;
         }
     }
