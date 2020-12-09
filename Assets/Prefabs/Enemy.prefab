@@ -104,7 +104,6 @@ GameObject:
   - component: {fileID: 5838221218235053257}
   - component: {fileID: 5838221218235053261}
   - component: {fileID: 8844855394819439132}
-  - component: {fileID: 5838221218235053260}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Untagged
@@ -157,45 +156,3 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.3, z: 0}
---- !u!114 &5838221218235053260
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5838221218235053262}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d7b55c7ecdb49a4a89fa5e6f9022861, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startWhenEnabled: 1
-  asynchronousLoad: 0
-  pauseWhenDisabled: 0
-  restartWhenComplete: 0
-  logTaskChanges: 0
-  group: 0
-  resetValuesOnRestart: 0
-  externalBehavior: {fileID: 0}
-  mBehaviorSource:
-    behaviorName: Enemy
-    behaviorDescription: Enemy AI
-    mTaskData:
-      types: []
-      parentIndex: 
-      startIndex: 
-      variableStartIndex: 
-      JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(343.773071,-27.22094)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(3.77307129,122.77906)"},"ID":1,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.UntilSuccess","NodeData":{"Offset":"(3.76021385,219.240585)"},"ID":2,"Name":"Until
-        Success","Instant":true,"Children":[{"Type":"WithinSight","NodeData":{"Offset":"(-1.345932,144.445679)","Comment":"Find
-        entity within sight."},"ID":3,"Name":"Within Sight","Instant":true,"SingleFieldOfViewAngle":45,"StringAimingTag":"Player","SharedTransformAimingTransform":{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"AimingTargetTransform","IsShared":true,"IsGlobal":true}}]}]}}'
-      fieldSerializationData:
-        typeName: []
-        fieldNameHash: 
-        startIndex: 
-        dataPosition: 
-        unityObjects: []
-        byteData: 
-        byteDataArray: 
-      Version: 1.6.7
-  gizmoViewMode: 2
-  showBehaviorDesignerGizmo: 1
