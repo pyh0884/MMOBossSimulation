@@ -11,7 +11,7 @@ public class WithinSight : Conditional
     public SharedTransform AimingTransform;
 
     // Target transform
-    private Transform targetTransform;
+    public Transform targetTransform;
 
     public override TaskStatus OnUpdate()
     {
@@ -30,6 +30,8 @@ public class WithinSight : Conditional
 
         Vector3 direction = targetTransform.position - transform.position;
         // An object is within sight if the angle is less than field of view
+
+        Debug.Log(Vector3.Angle(direction, transform.forward));
         return Vector3.Angle(direction, transform.forward) < fieldOfViewAngle;
     }
 }
