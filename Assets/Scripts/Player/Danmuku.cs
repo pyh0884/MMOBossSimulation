@@ -46,6 +46,7 @@ public class Danmuku : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && isCasting == false) 
         {
             isCasting = true;
+            targetDirection = transform.rotation;
             targetDegree = rb.rotation.y;
         }
         #endregion
