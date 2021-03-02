@@ -15,7 +15,7 @@ public class Danmuku : MonoBehaviour
     public Transform EmitPoint;
     [Range(1, 3)]
     public int ControlMode = 1;
-    private Quaternion targetDirection;
+    public Quaternion targetDirection;
     private float targetDegree;
     public float rotationSpeed = 15.0f;
     public float BulletSpeed = 15.0f;
@@ -51,7 +51,6 @@ public class Danmuku : MonoBehaviour
             targetDegree = rb.rotation.y;
         }
         #endregion
-
     }
 
     private void FixedUpdate()
@@ -61,8 +60,16 @@ public class Danmuku : MonoBehaviour
         {
             case 1://180度一秒的WASD转向
                 rb.rotation = Quaternion.Lerp(transform.rotation, targetDirection, Time.fixedDeltaTime * rotationSpeed);
-                Vector2 rotationAxis = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
-                targetDirection = Quaternion.Euler(0, 90 - Mathf.Atan2(rotationAxis.y, rotationAxis.x) * Mathf.Rad2Deg, 0);
+                Vector2 rotationAxis;
+                if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
+                {
+                    targetDirection = transform.rotation;
+                }
+                else
+                {
+                    rotationAxis = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;                
+                    targetDirection = Quaternion.Euler(0, 90 - Mathf.Atan2(rotationAxis.y, rotationAxis.x) * Mathf.Rad2Deg, 0);
+                }
                 break;
             case 2://AD键控制缓慢旋转
                 targetDegree += Input.GetAxisRaw("Horizontal") * Time.fixedDeltaTime * rotationSpeed * 75;
