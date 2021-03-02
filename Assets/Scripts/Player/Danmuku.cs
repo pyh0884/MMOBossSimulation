@@ -18,6 +18,7 @@ public class Danmuku : MonoBehaviour
     private Quaternion targetDirection;
     private float targetDegree;
     public float rotationSpeed = 15.0f;
+    public float BulletSpeed = 15.0f;
     void Start()
     {
         pm = GetComponent<PlayerMovement>();
@@ -50,30 +51,35 @@ public class Danmuku : MonoBehaviour
             targetDegree = rb.rotation.y;
         }
         #endregion
+
+    }
+
+    private void FixedUpdate()
+    {
         if (!isCasting) return;
-        switch (ControlMode) 
+        switch (ControlMode)
         {
             case 1://180度一秒的WASD转向
-                rb.rotation = Quaternion.Lerp(transform.rotation, targetDirection, Time.deltaTime * rotationSpeed);
+                rb.rotation = Quaternion.Lerp(transform.rotation, targetDirection, Time.fixedDeltaTime * rotationSpeed);
                 Vector2 rotationAxis = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
                 targetDirection = Quaternion.Euler(0, 90 - Mathf.Atan2(rotationAxis.y, rotationAxis.x) * Mathf.Rad2Deg, 0);
                 break;
             case 2://AD键控制缓慢旋转
-                targetDegree += Input.GetAxisRaw("Horizontal") * Time.deltaTime * rotationSpeed * 25;
+                targetDegree += Input.GetAxisRaw("Horizontal") * Time.fixedDeltaTime * rotationSpeed * 75;
                 Debug.Log(targetDegree);
                 rb.rotation = Quaternion.Euler(0, targetDegree, 0);
                 break;
             case 3://鼠标的缓慢转向
-                rb.rotation = Quaternion.Lerp(transform.rotation, targetDirection, Time.deltaTime * rotationSpeed);
+                rb.rotation = Quaternion.Lerp(transform.rotation, targetDirection, Time.fixedDeltaTime * rotationSpeed);
                 Vector2 dir = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
                 targetDirection = Quaternion.Euler(0, 90 - Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg, 0);
                 break;
         }
-//         dir = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
-//         angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-// 
-//         //Rotation
-//         rb.rotation = Quaternion.Euler(0, 90 - angle, 0);
+        //         dir = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
+        //         angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        // 
+        //         //Rotation
+        //         rb.rotation = Quaternion.Euler(0, 90 - angle, 0);
     }
     public void Throw(float throwGap)
     {
@@ -82,16 +88,16 @@ public class Danmuku : MonoBehaviour
         {
             Vector3 forwardDirection = transform.forward;
             var bullet1 = Instantiate(bullet, EmitPoint.position, Quaternion.identity, null);
-            bullet1.GetComponent<Rigidbody>().velocity = new Vector3(forwardDirection.x - 0.30f, 0, forwardDirection.z) * 15.0f;
+            bullet1.GetComponent<Rigidbody>().velocity = new Vector3(forwardDirection.x - 0.30f, 0, forwardDirection.z) * BulletSpeed;
 
             var bullet2 = Instantiate(bullet, EmitPoint.position, Quaternion.identity, null);
-            bullet2.GetComponent<Rigidbody>().velocity = new Vector3(forwardDirection.x - 0.15f, 0, forwardDirection.z) * 15.0f;
+            bullet2.GetComponent<Rigidbody>().velocity = new Vector3(forwardDirection.x - 0.15f, 0, forwardDirection.z) * BulletSpeed;
 
             var bullet3 = Instantiate(bullet, EmitPoint.position, Quaternion.identity, null);
-            bullet3.GetComponent<Rigidbody>().velocity = forwardDirection * 15.0f;
+            bullet3.GetComponent<Rigidbody>().velocity = forwardDirection * BulletSpeed;
 
             var bullet4 = Instantiate(bullet, EmitPoint.position, Quaternion.identity, null);
-            bullet4.GetComponent<Rigidbody>().velocity = new Vector3(forwardDirection.x + 0.15f, 0, forwardDirection.z) * 15.0f;
+            bullet4.GetComponent<Rigidbody>().velocity = new Vector3(forwardDirection.x + 0.15f, 0, forwardDirection.z) * BulletSpeed;
             throwTimer = 0.0f;
         }
     }
