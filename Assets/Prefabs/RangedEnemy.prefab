@@ -1,65 +1,28 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &2088023229165998699
+--- !u!114 &8898214343378908983
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3236838060509956178}
+  m_GameObject: {fileID: 6229891397040293239}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d7b55c7ecdb49a4a89fa5e6f9022861, type: 3}
+  m_Script: {fileID: 11500000, guid: 40944046977ec964c899c6e5d15f8ab4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startWhenEnabled: 1
-  asynchronousLoad: 0
-  pauseWhenDisabled: 0
-  restartWhenComplete: 0
-  logTaskChanges: 0
-  group: 0
-  resetValuesOnRestart: 0
-  externalBehavior: {fileID: 0}
-  mBehaviorSource:
-    behaviorName: Healing AI
-    behaviorDescription: Enemy Healing AI
-    mTaskData:
-      types: []
-      parentIndex: 
-      startIndex: 
-      variableStartIndex: 
-      JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(206.492432,6.580242)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.PrioritySelector","NodeData":{"Offset":"(0.2967682,136.7976)"},"ID":1,"Name":"Priority
-        Selector","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"MMO_WorkSpace.SingleHealing","NodeData":{"Offset":"(-97.82608,140)"},"ID":2,"Name":"Single
-        Healing","Instant":true,"SingletimeLimit":1,"SinglehealingAmount":7},{"Type":"MMO_WorkSpace.MultipleHealing","NodeData":{"Offset":"(107.905487,142.449768)"},"ID":3,"Name":"Multiple
-        Healing","Instant":true,"SingletimeLimit":2,"SinglehealingAmount":5}]}}'
-      fieldSerializationData:
-        typeName: []
-        fieldNameHash: 
-        startIndex: 
-        dataPosition: 
-        unityObjects: []
-        byteData: 
-        byteDataArray: 
-      Version: 1.6.7
-  gizmoViewMode: 2
-  showBehaviorDesignerGizmo: 1
---- !u!1001 &9074199460382604444
+  movementSpeed: 2
+  AutoATK: {fileID: 7921686380010138731, guid: 2b8004270f75e384a98d745ef2ab6911, type: 3}
+  AutoATKCD: 0.75
+  BulletSpeed: 5
+--- !u!1001 &536071789660680633
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3537005728267466412, guid: 0431e32d1b38375468e2790ca0d56a6b,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: b52a7c2bcc4aaad468b2c87dcd123ec5, type: 2}
-    - target: {fileID: 5212005264081142972, guid: 0431e32d1b38375468e2790ca0d56a6b,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5838221218235053257, guid: 0431e32d1b38375468e2790ca0d56a6b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -115,36 +78,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5838221218235053260, guid: 0431e32d1b38375468e2790ca0d56a6b,
-        type: 3}
-      propertyPath: mBehaviorSource.behaviorName
-      value: Enemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 5838221218235053260, guid: 0431e32d1b38375468e2790ca0d56a6b,
-        type: 3}
-      propertyPath: group
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5838221218235053260, guid: 0431e32d1b38375468e2790ca0d56a6b,
-        type: 3}
-      propertyPath: mBehaviorSource.behaviorDescription
-      value: Enemy AI
-      objectReference: {fileID: 0}
     - target: {fileID: 5838221218235053262, guid: 0431e32d1b38375468e2790ca0d56a6b,
         type: 3}
       propertyPath: m_Name
-      value: EnemyHeal
-      objectReference: {fileID: 0}
-    - target: {fileID: 5838221218235053262, guid: 0431e32d1b38375468e2790ca0d56a6b,
-        type: 3}
-      propertyPath: m_TagString
-      value: Enemy
+      value: RangedEnemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0431e32d1b38375468e2790ca0d56a6b, type: 3}
---- !u!1 &3236838060509956178 stripped
+--- !u!1 &6229891397040293239 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5838221218235053262, guid: 0431e32d1b38375468e2790ca0d56a6b,
     type: 3}
-  m_PrefabInstance: {fileID: 9074199460382604444}
+  m_PrefabInstance: {fileID: 536071789660680633}
   m_PrefabAsset: {fileID: 0}
