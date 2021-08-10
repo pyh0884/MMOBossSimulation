@@ -6,22 +6,35 @@ using UnityEngine.UI;
 public class SkillRotation : MonoBehaviour
 {
     private GameObject player;
+    private SkillManager skillManager;
     private Slider slider;
     public float duration;
     public Image[] skillIcons;
-    public GameObject[] skills;
-    public float[] skillMoments;
-    private bool[] skillTriggers = new bool[3];
+    public List<GameObject> skills;
+    public List<float> skillMoments;
+    private bool[] skillTriggers = new bool[6];
     private float rectWidth;
 
     void Start()
     {
+        skills.Clear();
+        skillMoments.Clear();
+        skillManager = FindObjectOfType<SkillManager>();
         player = FindObjectOfType<PlayerMovement>().gameObject;
         slider = GetComponent<Slider>();
         rectWidth = GetComponent<RectTransform>().rect.width;
-        skillIcons[0].GetComponent<RectTransform>().anchoredPosition = new Vector3(rectWidth * skillMoments[0] - rectWidth / 2.0f, skillIcons[0].GetComponent<RectTransform>().anchoredPosition.y, 0);
-        skillIcons[1].GetComponent<RectTransform>().anchoredPosition = new Vector3(rectWidth * skillMoments[1] - rectWidth / 2.0f, skillIcons[1].GetComponent<RectTransform>().anchoredPosition.y, 0);
-        skillIcons[2].GetComponent<RectTransform>().anchoredPosition = new Vector3(rectWidth * skillMoments[2] - rectWidth / 2.0f, skillIcons[2].GetComponent<RectTransform>().anchoredPosition.y, 0);
+        foreach (SkillInfo info in skillManager.SkillInfos)
+        {
+            var skill = Instantiate(info.SkillPrefab, player.transform);
+            skills.Add(skill.gameObject);
+            skillMoments.Add(info.SkillMoment);
+        }
+        for (int index = 0; index < skills.Count; ++index)
+        {
+            skillIcons[index].GetComponent<RectTransform>().anchoredPosition = new Vector3(rectWidth * skillMoments[index] - rectWidth / 2.0f, skillIcons[index].GetComponent<RectTransform>().anchoredPosition.y, 0);
+            skillIcons[index].gameObject.SetActive(true);
+            skillIcons[index].GetComponentInChildren<Text>().text = skillManager.SkillInfos[index].SkillName;
+        }
     }
 
     void Update()
@@ -33,8 +46,11 @@ public class SkillRotation : MonoBehaviour
             skillTriggers[0] = false;
             skillTriggers[1] = false;
             skillTriggers[2] = false;
+            skillTriggers[3] = false;
+            skillTriggers[4] = false;
+            skillTriggers[5] = false;
         }
-        for (int index = 0; index < skills.Length; ++index)
+        for (int index = 0; index < skills.Count; ++index)
         {
             if (skillMoments[index] < slider.value && !skillTriggers[index])
             {
